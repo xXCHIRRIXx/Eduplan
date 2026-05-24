@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #FAF7F2; /* Tono almendra/crema muy suave para descansar la vista */
+}
+
+.transition-all {
+    transition: all 0.2s ease-in-out;
+}
