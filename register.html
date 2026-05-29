@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta — Eduplan Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#FAF7F2] text-stone-800 min-h-screen flex flex-col justify-center items-center px-4">
+
+    <div class="bg-white border border-stone-200 p-8 rounded-3xl shadow-xl w-full max-w-md space-y-6">
+        <div class="text-center">
+            <div class="text-4xl mb-2">📚</div>
+            <h1 class="text-2xl font-extrabold text-stone-900">Crea tu cuenta</h1>
+        </div>
+
+        <form id="formRegistro" class="space-y-4">
+            <input type="email" id="regEmail" placeholder="Correo electrónico" required 
+                   class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-rose-300 outline-none">
+            <input type="password" id="regPassword" placeholder="Contraseña (mínimo 6 caracteres)" required 
+                   class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-rose-300 outline-none">
+            
+            <button type="submit" id="btnRegistro" class="w-full bg-stone-800 hover:bg-stone-900 text-white font-bold py-3 rounded-xl text-sm transition-all">
+                Registrarme
+            </button>
+        </form>
+        
+        <p class="text-center text-sm text-stone-500">
+            ¿Ya tienes cuenta? <a href="login.html" class="text-rose-500 font-bold hover:underline">Inicia sesión</a>
+        </p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // --- PEGA AQUÍ TU OBJETO firebaseConfig DE LA CONSOLA DE FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCsNQsZeBxA_EAEm8gb_eOIX-j4KqHJS2k",
+            authDomain: "eduplan-pro-410e4.firebaseapp.com",
+            databaseURL: "https://eduplan-pro-410e4-default-rtdb.firebaseio.com",
+            projectId: "eduplan-pro-410e4",
+            storageBucket: "eduplan-pro-410e4.firebasestorage.app",
+            messagingSenderId: "311696034857",
+            appId: "1:311696034857:web:eea18674e4e432bc276038",
+            measurementId: "G-X5VT5KRX8Z"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const form = document.getElementById('formRegistro');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const btn = document.getElementById('btnRegistro');
+
+            // Feedback visual
+            btn.innerText = "Registrando...";
+            btn.disabled = true;
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("¡Cuenta creada con éxito!");
+                window.location.href = "index.html"; // Redirige a tu app principal
+            } catch (error) {
+                console.error("Error completo:", error);
+                let mensaje = error.message;
+                
+                // Traducción de errores comunes para el usuario
+                if (error.code === 'auth/email-already-in-use') mensaje = "El correo ya está registrado.";
+                if (error.code === 'auth/weak-password') mensaje = "La contraseña debe tener al menos 6 caracteres.";
+                
+                alert("Error: " + mensaje);
+            } finally {
+                btn.innerText = "Registrarme";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

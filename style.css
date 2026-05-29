@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 0.4s ease;
+}
+
+#contenedorDiasCheck::-webkit-scrollbar {
+    width: 6px;
+}
+#contenedorDiasCheck::-webkit-scrollbar-track {
+    background: transparent;
+}
+#contenedorDiasCheck::-webkit-scrollbar-thumb {
+    background: #e7e5e4;
+    border-radius: 10px;
+}
+#contenedorDiasCheck::-webkit-scrollbar-thumb:hover {
+    background: #d6d3d1;
+}
